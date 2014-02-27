@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import curses,sys,string,random
-import curses.textpad
-import datetime
+import curses,sys,string,random,datetime
 
 basetime = datetime.datetime.now()
 att = 0
