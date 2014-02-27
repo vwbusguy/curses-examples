@@ -30,7 +30,7 @@ def listen(screen):
 		screen.addstr(12,25,"You've found the secret foo!")
 		screen.addstr(13,25,'It is %s!!!' % t)
 		screen.nodelay(0)
-		while screen.getch().lower() != ord('q'):
+		while screen.getch() != ord('q'):
 			screen.addstr(14,25,"Congrats!  Press 'q' to exit!")
 		return False
 	else:
