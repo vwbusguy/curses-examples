@@ -45,11 +45,10 @@ def tries(screen,amount):
 
 try:
 	screen = curses.initscr()
-	screen.box()
 	curses.noecho()
 	screen.nodelay(1)
 	curses.curs_set(0)
-	screen.border(2)
+	screen.border()
 	screen.addstr(1,1,'Find the secret foo')
 	screen.addstr(12,25,'Can you find me?!?!')
 	while listen(screen):
