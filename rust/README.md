@@ -9,7 +9,7 @@ This example is a rudimentary map of my shared Engineering office space at [Azus
 
 To compile and run from source, you must have rust and cargo installed.
 
-Additionally, since this requries ncurses, you must have both ncurses and the ncurses headers installed.  For example, on Fedora:
+Additionally, since this requires ncurses, you must have both ncurses and the ncurses headers installed.  For example, on Fedora:
 
 `$ sudo dnf install rust cargo ncurses ncurses-devel`
 
