@@ -1,0 +1,7 @@
+[package]
+name = "sysdev-curses"
+version = "0.1.0"
+authors = ["scott"]
+
+[dependencies]
+pancurses = "0.8"
