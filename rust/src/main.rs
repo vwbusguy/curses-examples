@@ -2,24 +2,23 @@ extern crate pancurses;
 
 use pancurses::{initscr, endwin, Input, noecho};
 use std::collections::HashMap;
-
-#[derive(Eq,PartialEq,Hash)]
-struct Point {
-    x: i32,
-    y: i32,
-}
-
-struct WinRef{
-    ch: char,
-    rtype: String,
-}
+// Bring in lib.rs structs
+mod lib;
+use lib::{Point,WinRef};
 
 fn main() {
+    // Define screen boundaries
     let min_ref = Point{x:1,y:1};
     let max_ref = Point{x:17,y:19};
+
+    // Define initial cursor position
     let cursor = Point{x:5,y:5};
+
+    // Create initial HashMaps for tracking screen objects and user phrases
     let mut draw_list: HashMap<Point,WinRef> = HashMap::new();
     let mut phrase_list: HashMap<String,String> = HashMap::new();
+
+    // Identify and populate person object points
     phrase_list.insert("Rick".to_string(),"Rick: Turn that banjo mularkey off!           ".to_string());
     phrase_list.insert("Nico".to_string(),"Nico: I think I've found the solution!        ".to_string());
     phrase_list.insert("Samuel".to_string(),"Samuel: I found a new zsh git tool!           ".to_string());
@@ -30,7 +29,10 @@ fn main() {
     draw_list.insert(Point{x:15,y:2},WinRef{ch:'o',rtype:"Mark".to_string()});
     draw_list.insert(Point{x:13,y:2},WinRef{ch:'o',rtype:"Samuel".to_string()});
     draw_list.insert(Point{x:9,y:2},WinRef{ch:'o',rtype:"Nico".to_string()});
+
     let window = initscr();
+    
+    // Populate lists of points for furniture character plots, grouped by character
     let furn_up_list = vec![
         Point{x:14,y:2},
         Point{x:14,y:3},
@@ -96,22 +98,34 @@ fn main() {
     for (pref,wref) in &draw_list{
         window.mvaddch(pref.y,pref.x,wref.ch);
     }
+
+    // Give initial welcome message
     window.mvprintw(0,0,"Meet the SysDev team! (Type q or Del to exit)");
+
+    // Put the cursor in the initial cursor position
     window.mv(cursor.y,cursor.x);
+
     window.refresh();
     window.keypad(true);
     noecho();
     loop {
         match window.getch() {
+            // On Delete or 'q' key, break and end the program
             Some(Input::KeyDC) | Some( Input::Character('q')) => break,
+
+            // For arrow keys, attempt to move the cursor or interact
             Some(Input::KeyUp) => {
+                // Populate references for current position and where the cursor may end up
                 let cur_ref = window.get_cur_yx();
                 let cur_pt = Point{x:cur_ref.1,y:cur_ref.0};
                 let ref_y = cur_pt.y - 1;
                 let ref_pt = Point{x:cur_pt.x,y:ref_y};
+                // If move isn't out of bounds or into an object, move the cursor
                 if ref_y >= min_ref.y && !draw_list.contains_key(&ref_pt){
                     window.mv(ref_y,cur_pt.x);
                 }
+
+                // If the move would hit a person object, print the person's phrase and don't move
                 if draw_list.contains_key(&ref_pt){
                     let ref dtype = draw_list.get(&ref_pt).unwrap().rtype;
                     if dtype != "furn" && phrase_list.contains_key(dtype){
@@ -169,10 +183,11 @@ fn main() {
                 }
             },
             Some(input) => {
+                // If some other key is pressed, show the welcome message again
                 let cur_ref = window.get_cur_yx();
                 window.mvprintw(0,0,"Meet the SysDev team! (Type q or Del to exit)");
                 window.mv(cur_ref.0,cur_ref.1);
-            },    
+            },
             None => ()
         }
         window.refresh();
