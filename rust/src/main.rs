@@ -182,7 +182,7 @@ fn main() {
                     window.mv(cur_pt.y,cur_pt.x);
                 }
             },
-            Some(input) => {
+            Some(_input) => {
                 // If some other key is pressed, show the welcome message again
                 let cur_ref = window.get_cur_yx();
                 window.mvprintw(0,0,"Meet the SysDev team! (Type q or Del to exit)");
