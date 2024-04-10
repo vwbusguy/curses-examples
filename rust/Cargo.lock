@@ -41,6 +41,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "ncurses"
+version = "6.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c4e8f88d2767a7c13193ede671f25733e32e4116d4c17778cf9af3beddba7881"
+dependencies = [
+ "cc",
+ "libc",
+ "pkg-config",
+]
+
+[[package]]
 name = "pancurses"
 version = "0.17.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -48,7 +59,7 @@ checksum = "0352975c36cbacb9ee99bfb709b9db818bed43af57751797f8633649759d13db"
 dependencies = [
  "libc",
  "log",
- "ncurses",
+ "ncurses 5.101.0",
  "pdcurses-sys",
  "winreg",
 ]
@@ -73,6 +84,7 @@ checksum = "1df8c4ec4b0627e53bdf214615ad287367e482558cf84b109250b37464dc03ae"
 name = "sysdev-curses"
 version = "0.1.0"
 dependencies = [
+ "ncurses 6.0.0",
  "pancurses",
 ]
 

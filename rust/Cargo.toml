@@ -5,3 +5,4 @@ authors = ["scott"]
 
 [dependencies]
 pancurses = "0.17.0"
+ncurses = "6.0"
